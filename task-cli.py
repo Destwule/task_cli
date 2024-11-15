@@ -65,6 +65,7 @@ def add(arg: list=[]) -> None:
         
         task_dict.update(my_dict)
         dump_file(task_dict)
+        print("Task added successfully")
 
 
 def update(arg: list):
@@ -91,6 +92,7 @@ def update(arg: list):
     
     task_dict = new_dict
     dump_file(task_dict)
+    print(f"Task at index {id} updated successfully")
 
  
 def delete(arg: list):
@@ -108,7 +110,7 @@ def delete(arg: list):
             del task_dict[heading]
     
     dump_file(task_dict)
-    print("Done")
+    print("Task deleted successfully")
 
 
 def display(arg: list=[], arg_val=""):
@@ -179,6 +181,8 @@ def mark_done(arg: list, status="done"):
                     task_dict[heading]['updatedAt'] = getTime()
         
         dump_file(task_dict)
+    print("Task status successfully updated")
+    
 
 
 def mark_in_progress(arg: list):
