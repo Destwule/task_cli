@@ -30,6 +30,9 @@ except JSONDecodeError as e:
 
 task_dict = dict(**loaded)
 
+def getTime():
+    """return the current time"""
+    return time.ctime()
 
 def add(arg: list=[]) -> None:
     """
@@ -38,12 +41,11 @@ def add(arg: list=[]) -> None:
     heading = ' '.join(arg) if arg else ""
     if heading:
         updatedAt = None
-        time_added = time.ctime()
         my_dict = {}
 
         my_dict[heading] = {
             "status": "todo",
-            "createdAt": time_added,
+            "createdAt": getTime(),
             "updatedAt": updatedAt,
         }
         
@@ -68,7 +70,7 @@ def update(arg: list):
                 for key, value in task_dict.items():
                     if heading == key:
                         new_dict[new_head] = value
-                        new_dict[new_head]['updatedAt'] = time.ctime()
+                        new_dict[new_head]['updatedAt'] = getTime()
                     else:
                         new_dict[key] = value
         
@@ -112,7 +114,7 @@ def display(arg: list=[], arg_val=""):
             print("-"*45)
         return
     
-    if status not in ['done', 'todo', 'in-progress']:
+    if status not in ['mark-done', 'todo', 'mark-in-progress']:
         print(usage)
         print(f"{status!r} IS NOT A VALID 'arg'")
         return
@@ -159,6 +161,7 @@ def mark_done(arg: list, status="done"):
             if id == item_num:
                 for key, value in task_dict.items():
                     task_dict[heading]['status'] = status
+                    task_dict[heading]['updatedAt'] = getTime()
         
         dump_file(task_dict)
 
@@ -206,4 +209,4 @@ if __name__ == "__main__":
     except Exception as e:
         with open(error_path, 'a') as fileobj:
             print(e, file=fileobj)
-        print()
+        print("-"*45)
